@@ -1,5 +1,6 @@
 let controller;
 let slideScene;
+let pageScene;
 
 function animateSlides() {
   // Initialize the controller
@@ -8,7 +9,7 @@ function animateSlides() {
   const sliders = document.querySelectorAll(".slide");
   const nav = document.querySelector(".nav-header");
   // Loop over each slide
-  sliders.forEach((slide) => {
+  sliders.forEach((slide, index, slides) => {
     const revealImg = slide.querySelector(".reveal-img");
     const img = slide.querySelector("img");
     const revealtext = slide.querySelector(".reveal-text");
@@ -21,6 +22,41 @@ function animateSlides() {
       .fromTo(img, { scale: 2 }, { scale: 1 }, "-=1")
       .fromTo(revealtext, { x: "0%" }, { x: "100%" }, "-=0.75")
       .fromTo(nav, { y: "-100%" }, { y: "0%" }, "-=0.5");
+    // Scene
+    slideScene = new ScrollMagic.Scene({
+      triggerElement: slide,
+      triggerHook: 0.2,
+      reverse: false,
+    })
+      .setTween(slideTL)
+      .addIndicators({
+        colorStart: "white",
+        colorTrigger: "white",
+        name: "slide",
+      })
+      .addTo(controller);
+    // New Animation
+    const pageTL = gsap.timeline();
+    let nextSlide = slides.length - 1 === index ? "end" : slides[index + 1];
+    pageTL
+      .fromTo(nextSlide, { y: "0%" }, { y: "50%" })
+      .fromTo(slide, { opacity: 1, scale: 1 }, { opacity: 0, scale: 0.5 })
+      .fromTo(nextSlide, { y: "50%" }, { y: "0%" }, "-=0.5");
+    // Create new scene
+    pageScene = new ScrollMagic.Scene({
+      triggerElement: slide,
+      triggerHook: 0,
+      duration: "100%",
+    })
+      .setTween(pageTL)
+      .addIndicators({
+        colorStart: "white",
+        colorTrigger: "white",
+        name: "page",
+        indent: 200,
+      })
+      .setPin(slide, { pushFollowers: false })
+      .addTo(controller);
   });
 }
 
