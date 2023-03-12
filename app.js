@@ -2,6 +2,7 @@ let controller;
 let slideScene;
 let pageScene;
 
+// Functions
 function animateSlides() {
   // Initialize the controller
   controller = new ScrollMagic.Controller();
@@ -38,6 +39,9 @@ function animateSlides() {
     // New Animation
     const pageTL = gsap.timeline();
     let nextSlide = slides.length - 1 === index ? "end" : slides[index + 1];
+    if (nextSlide === "end") {
+      return false;
+    }
     pageTL
       .fromTo(nextSlide, { y: "0%" }, { y: "50%" })
       .fromTo(slide, { opacity: 1, scale: 1 }, { opacity: 0, scale: 0.5 })
@@ -60,4 +64,34 @@ function animateSlides() {
   });
 }
 
+let mouse = document.querySelector(".cursor");
+let mouseTxt = mouse.querySelector("span");
+// Function that adds the cursor div to the main cursor
+function cursor(e) {
+  mouse.style.top = e.pageY + "px";
+  mouse.style.left = e.pageX + "px";
+}
+
+// Add cursor animations
+function activeCursor(e) {
+  const item = e.target;
+  if (item.id === "logo" || item.classList.contains("burger")) {
+    mouse.classList.add("nav-active");
+  } else {
+    mouse.classList.remove("nav-active");
+  }
+  if (item.classList.contains("explore")) {
+    mouse.classList.add("explore-active");
+    gsap.to(".title-swipe", 1, { y: "0%" });
+    mouseTxt.innerText = "Tap";
+  } else {
+    mouse.classList.remove("explore-active");
+    gsap.to(".title-swipe", 1, { y: "100%" });
+    mouseTxt.innerText = "";
+  }
+}
+
+// Event listeners
+window.addEventListener("mousemove", cursor);
+window.addEventListener("mouseover", activeCursor);
 animateSlides();
