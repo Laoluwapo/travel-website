@@ -10,6 +10,10 @@ body {
     overflow-x: hidden;
 }
 
+a:visited {
+    color: white;
+}
+
 #logo {
     color: white;
     font-family: 'Abril Fatface';
@@ -219,4 +223,66 @@ body {
 
 body.hide {
     overflow: hidden;
+}
+
+/* Other Pages */
+.fashion1, .fashion2, .fashion3 {
+    min-height: 90vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 70%;
+    margin: auto;
+    margin-top: 4rem;
+    color: white;
+    flex-wrap: wrap;
+    position: relative;
+}
+
+.fashion-image {
+    height: 70vh;
+    flex-basis: 30rem;
+}
+
+.fashion-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.fashion-text {
+    position: relative;
+    flex: 1;
+    flex-basis: 25rem;
+}
+
+.fashion-text h1 {
+    font-size: 6rem;
+    padding: 4rem 0rem;
+}
+
+.fashion1 h1 {
+    color: rgb(255, 139, 93);
+}
+
+.fashion2 h1 {
+    color: rgb(167, 110, 231);
+}
+
+.fashion3 h1 {
+    color: rgb(86, 124, 228);
+}
+
+.fashion-text p {
+    font-size: 1.6rem;
+    padding: 2rem 2rem 0 0;
+    margin-bottom: 10rem;
+}
+
+.fashion-nr {
+    font-size: 15rem;
+    position: absolute;
+    left: 46%;
+    bottom: 8%;
+    opacity: 0.2;
 }

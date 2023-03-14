@@ -2,6 +2,8 @@ let controller;
 let slideScene;
 let pageScene;
 
+gsap.config({ nullTargetWarn: false });
+
 // Functions
 function animateSlides() {
   // Initialize the controller
