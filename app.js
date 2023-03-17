@@ -1,8 +1,9 @@
 let controller;
 let slideScene;
 let pageScene;
+let detailScene;
 
-// gsap.config({ nullTargetWarn: false });
+gsap.config({ nullTargetWarn: false });
 
 // Functions
 function animateSlides() {
@@ -10,7 +11,6 @@ function animateSlides() {
   controller = new ScrollMagic.Controller();
   // Select elements
   const sliders = document.querySelectorAll(".slide");
-  const nav = document.querySelector(".nav-header");
   // Loop over each slide
   sliders.forEach((slide, index, slides) => {
     const revealImg = slide.querySelector(".reveal-img");
@@ -23,8 +23,7 @@ function animateSlides() {
     slideTL
       .fromTo(revealImg, { x: "0%" }, { x: "100%" })
       .fromTo(img, { scale: 2 }, { scale: 1 }, "-=1")
-      .fromTo(revealtext, { x: "0%" }, { x: "100%" }, "-=0.75")
-      .fromTo(nav, { y: "-100%" }, { y: "0%" }, "-=0.5");
+      .fromTo(revealtext, { x: "0%" }, { x: "100%" }, "-=0.75");
     // Scene
     slideScene = new ScrollMagic.Scene({
       triggerElement: slide,
@@ -134,21 +133,17 @@ barba.init({
         triggers.forEach((trigger) => trigger.kill());
         // Refresh ScrollTrigger to remove any cached values
         ScrollTrigger.refresh();
-        // slideScene.destroy();
-        // pageScene.destroy();
-        // controller.destroy();
       },
     },
     {
       namespace: "fashion",
       beforeEnter() {
         logo.href = "../index.html";
-        gsap.fromTo(
-          ".nav-header",
-          1,
-          { y: "100%" },
-          { y: "0%", ease: "power2.inOut" }
-        );
+        detailAnimation();
+      },
+      beforeLeave() {
+        controller.destroy();
+        detailScene.destroy();
       },
     },
   ],
@@ -184,10 +179,44 @@ barba.init({
         );
         // Fade next section in
         tl.fromTo(next.container, 1, { opacity: 0 }, { opacity: 1 });
+        tl.fromTo(
+          ".nav-header",
+          1,
+          { y: "-100%" },
+          { y: "0%", ease: "power2.inOut" },
+          "-=1.5"
+        );
       },
     },
   ],
 });
+
+function detailAnimation() {
+  controller = new ScrollMagic.Controller();
+  const slides = document.querySelectorAll(".detail-slide");
+  slides.forEach((slide, index, slides) => {
+    const slideTl = gsap.timeline({ defaults: { duration: 1 } });
+    let nextSlide = slides.length - 1 === index ? "end" : slides[index + 1];
+    const nextImg = nextSlide.querySelector("img");
+    slideTl.fromTo(slide, { opacity: 1 }, { opacity: 0 });
+    slideTl.fromTo(nextSlide, { opacity: 0 }, { opacity: 1 }, "-=1");
+    slideTl.fromTo(nextImg, { x: "50%" }, { x: "0%" });
+    // Scene
+    detailScene = new ScrollMagic.Scene({
+      triggerElement: slide,
+      duration: "100%",
+      triggerHook: 0,
+    })
+      .setPin(slide, { pushFollowers: false })
+      .setTween(slideTl)
+      .addIndicators({
+        colorStart: "white",
+        colorTrigger: "white",
+        name: "detailScene",
+      })
+      .addTo(controller);
+  });
+}
 
 // Event listeners
 burger.addEventListener("click", navToggle);
