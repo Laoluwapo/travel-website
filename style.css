@@ -356,20 +356,16 @@ body.hide {
     .fashion-nr {
       font-size: 8rem;
     }
-    .nav-bar {
-      display: block;
-    }
-    .nav-links {
-      font-size: 2rem;
-      text-align: center;
-    }
     .contact h2 {
       font-size: 3rem;
-      text-align: center;
+      text-align: left;
     }
     .contact p {
       font-size: 1.2rem;
-      text-align: center;
+      text-align: left;
+    }
+    .reveal-img, .reveal-text {
+      display: none;
     }
     /* Other pages */
     .fashion1, .fashion2, .fashion3 {
@@ -408,15 +404,20 @@ body.hide {
         bottom: 0;
         opacity: 0.4;
     }
+    /* Nav */
     .nav-bar {
         display: block;
+        overflow: hidden;
     }
     .nav-links {
         margin-top: 25%;
         font-size: 2rem;
     }
     .nav-links h3 {
-        padding: 2rem 1rem;
+        padding: 1.5rem 1rem;
+    }
+    .cursor {
+        display: none;
     }
 }
   
