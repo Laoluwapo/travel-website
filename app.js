@@ -31,11 +31,11 @@ function animateSlides() {
       reverse: false,
     })
       .setTween(slideTL)
-      .addIndicators({
-        colorStart: "white",
-        colorTrigger: "white",
-        name: "slide",
-      })
+      // .addIndicators({
+      //   colorStart: "white",
+      //   colorTrigger: "white",
+      //   name: "slide",
+      // })
       .addTo(controller);
     // New Animation
     const pageTL = gsap.timeline();
@@ -54,12 +54,12 @@ function animateSlides() {
       duration: "100%",
     })
       .setTween(pageTL)
-      .addIndicators({
-        colorStart: "white",
-        colorTrigger: "white",
-        name: "page",
-        indent: 200,
-      })
+      // .addIndicators({
+      //   colorStart: "white",
+      //   colorTrigger: "white",
+      //   name: "page",
+      //   indent: 200,
+      // })
       .setPin(slide, { pushFollowers: false })
       .addTo(controller);
   });
@@ -200,7 +200,7 @@ function detailAnimation() {
     const nextImg = nextSlide.querySelector("img");
     slideTl.fromTo(slide, { opacity: 1 }, { opacity: 0 });
     slideTl.fromTo(nextSlide, { opacity: 0 }, { opacity: 1 }, "-=1");
-    slideTl.fromTo(nextImg, { x: "50%" }, { x: "0%" });
+    slideTl.fromTo(nextImg, { x: "-50%" }, { x: "0%" });
     // Scene
     detailScene = new ScrollMagic.Scene({
       triggerElement: slide,
@@ -209,11 +209,11 @@ function detailAnimation() {
     })
       .setPin(slide, { pushFollowers: false })
       .setTween(slideTl)
-      .addIndicators({
-        colorStart: "white",
-        colorTrigger: "white",
-        name: "detailScene",
-      })
+      // .addIndicators({
+      //   colorStart: "white",
+      //   colorTrigger: "white",
+      //   name: "detailScene",
+      // })
       .addTo(controller);
   });
 }
